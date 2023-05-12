@@ -4,6 +4,7 @@
 
 import express from 'express'
 import routes from './routes'
+import './database' //não precisa colocar from porque o nome do arquivo é index.js
 
 class App{
     constructor(){
