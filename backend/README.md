@@ -74,3 +74,11 @@ await User.create({
         return res.status(400).json({ error: "Erro: não cadastrado"})
     })
 ```
+
+
+
+### Controllers
+Basicamente retirar a função que está em cada rota e passar para um arquivo de controlador.
+No arquivo controller criar uma função para cada ação, exportar e depois importar no arquivo
+de rotas e chamar dentro da rota onde estava a função antes.
+
