@@ -34,6 +34,12 @@ Sucrase é um alternativa ao Babel, apesar do Babel ser mais robusto o Sucrase �
 }
 ```
 
+### Rodar o projeto
+npm run dev
+
+
+### Receber retorno de dados em formato json
+app.use(express.json())
 
 
 ## Instalar o MongoDB
@@ -49,3 +55,22 @@ npm install --save mongoose
 
 Mongoose traduz os dados do banco de dados para objetos javascript, para que possam ser utilizados pela aplicação.
 
+**Obs:**
+A partir da versão 6 do MongoDB não se utiliza mais callback no create para verificar se houve erro, agora é usado
+.then() e .catch()
+Ex:
+```javascript
+await User.create({
+        nome: 'José Coelho',
+        email: 'jose-coelho@gmail.com',
+        senha: '123456'
+    }//, function (err, user){
+     //   if (err) return res.status(400).json({ error: "Erro: não cadastrado"})
+     //   return res.status(200).json({ error: "Usuário Cadastrado"})
+    //}
+    ).then(()=>{
+        return res.status(200).json({ error: "Usuário Cadastrado"})
+    }).catch(err=>{
+        return res.status(400).json({ error: "Erro: não cadastrado"})
+    })
+```
