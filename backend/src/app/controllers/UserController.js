@@ -1,7 +1,9 @@
+import * as Yup from 'Yup'
 import User from '../models/User'
 
 class UserController {
     async store(req, res) {
+
         if (typeof req.body === 'undefined') {
             return res.status(400).json({ 
                 error: true,
@@ -19,6 +21,7 @@ class UserController {
             })
         }
 
+/* 
         if(!req.body.nome || typeof req.body.nome == undefined || req.body.nome == null){
             return res.status(400).json({ 
                 error: true,
@@ -40,9 +43,20 @@ class UserController {
                 message: 'Error: Senha deve ser preenchido!'
             })
         }
+ */
 
-
-
+        const shema = Yup.object().shape({
+            nome: Yup.string().required(),
+            email: Yup.string().required(),
+            senha: Yup.string().required().min(6)
+        })
+        if(! (await shema.isValid(req.body))){
+            return res.status(400).json({ 
+                error: true,
+                code: 105,
+                message: 'Error: Dados inválidos!'
+            })
+        }
 
         const user = await User.create(req.body)
             .then((resposta) => {

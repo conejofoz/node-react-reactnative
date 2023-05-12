@@ -87,3 +87,24 @@ Basicamente retirar a função que está em cada rota e passar para um arquivo d
 No arquivo controller criar uma função para cada ação, exportar e depois importar no arquivo
 de rotas e chamar dentro da rota onde estava a função antes.
 
+
+
+
+
+### Validação de campos usando a dependência Yup
+npm install --save yup
+
+```javascript
+const shema = Yup.object().shape({
+    nome: Yup.string().required(),
+    email: Yup.string().required(),
+    senha: Yup.string().required().min(6)
+})
+if(! (await shema.isValid(req.body))){
+    return res.status(400).json({ 
+        error: true,
+        code: 105,
+        message: 'Error: Dados inválidos!'
+    })
+}
+```        
