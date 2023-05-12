@@ -1,0 +1,1 @@
+# Aplicativo com React Native
