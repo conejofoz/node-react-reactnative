@@ -15,15 +15,15 @@ Sucrase é um alternativa ao Babel, apesar do Babel ser mais robusto o Sucrase �
 
 * Configurar o sucrase
 
-** package.json
+   **package.json**
 ```javascript
 "scripts": {
     "dev": "nodemon src/server.js",
     "build": "sucrase ./src -d ./outDir --transforms imports",
 },
 ```
-
-** Criar na raíz do projeto o arquivo nodemon.json
+ 
+   **Criar na raíz do projeto o arquivo nodemon.json** 
 ```javascript
 {
     "watch": ["src"],
