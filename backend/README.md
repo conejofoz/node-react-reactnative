@@ -38,8 +38,13 @@ Sucrase é um alternativa ao Babel, apesar do Babel ser mais robusto o Sucrase �
 npm run dev
 
 
-### Receber retorno de dados em formato json
+### Json - Receber retorno de dados em formato json
 app.use(express.json())
+
+**importante:** Tem que ser antes das rotas senão o req.body chega undefined no controller
+
+
+
 
 
 ## Instalar o MongoDB

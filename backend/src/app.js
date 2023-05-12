@@ -5,15 +5,18 @@
 import express from 'express'
 import routes from './routes'
 import './database' //não precisa colocar from porque o nome do arquivo é index.js
+import bodyParser from 'body-parser'
 
 class App{
     constructor(){
         this.app = express()
-        this.routes()
         this.middlewares()
+        this.routes()
     }
     middlewares(){
         this.app.use(express.json())
+        this.app.use(bodyParser.urlencoded({ extended: true }));
+        this.app.use(bodyParser.json());
     }
     routes(){
         this.app.use(routes)
