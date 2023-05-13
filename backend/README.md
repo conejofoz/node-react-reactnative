@@ -131,7 +131,7 @@ Se a senha não confere usar mensagem genérica para dificultar a vida de possí
 
 
 
-###JWT
+### JWT
 npm install --save jsonwebtoken
 
 Caso o usuário seja válido gerar e retornar o token jwt junto com os demais dados do usuário
