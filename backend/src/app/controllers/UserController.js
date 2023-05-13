@@ -22,7 +22,7 @@ class UserController {
             })
         }
 
-/* 
+        /* 
         if(!req.body.nome || typeof req.body.nome == undefined || req.body.nome == null){
             return res.status(400).json({ 
                 error: true,
@@ -44,7 +44,7 @@ class UserController {
                 message: 'Error: Senha deve ser preenchido!'
             })
         }
- */
+        */
 
         const shema = Yup.object().shape({
             nome: Yup.string().required(),
@@ -61,6 +61,7 @@ class UserController {
 
         let dados = req.body
         dados.senha = await bcrypt.hash(dados.senha, 7)
+        
         const user = await User.create(dados)
             .then((resposta) => {
                 return res.status(200).json({

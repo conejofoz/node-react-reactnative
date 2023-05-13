@@ -2,6 +2,7 @@
 import { Router } from 'express'
 import User from './app/models/User'
 import UserController from './app/controllers/UserController'
+import LoginController from './app/controllers/LoginController'
 
 const routes = new Router()
 
@@ -10,7 +11,7 @@ routes.get('/', (req, res) => {
 })
 
 routes.post('/users', UserController.store)
-
+routes.post('/login', LoginController.store)
 
 /* usado anteriormente para teste */
 //routes.get('/', async (req, res)=>{
