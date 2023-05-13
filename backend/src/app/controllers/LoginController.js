@@ -6,7 +6,7 @@ import configAuth from '../../config/auth'
 class LoginController{
 
     async store(req, res){
-        const { email, password } = req.body
+        const { email, senha } = req.body
         
         const userExiste = await User.findOne({ email: email})
         if(!userExiste){
@@ -17,7 +17,7 @@ class LoginController{
             })
         }
         
-        if(! (await bcrypt.compare(password, userExiste.senha))){
+        if(! (await bcrypt.compare(senha, userExiste.senha))){
             return res.status(400).json({ 
                 error: true,
                 code: 111,

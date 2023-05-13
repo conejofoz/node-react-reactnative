@@ -3,6 +3,7 @@ import { Router } from 'express'
 import User from './app/models/User'
 import UserController from './app/controllers/UserController'
 import LoginController from './app/controllers/LoginController'
+import authMiddleware from './app/middlewares/auth'
 
 const routes = new Router()
 
@@ -12,7 +13,7 @@ routes.get('/', (req, res) => {
 
 routes.post('/users', UserController.store)
 routes.post('/login', LoginController.store)
-routes.delete('/users/:id', UserController.delete)
+routes.delete('/users/:id', authMiddleware, UserController.delete)
 
 /* usado anteriormente para teste */
 //routes.get('/', async (req, res)=>{

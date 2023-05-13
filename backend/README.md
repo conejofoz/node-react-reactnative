@@ -150,10 +150,13 @@ if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
 
 
 
-### JWT
+## JWT
 npm install --save jsonwebtoken
 
-Caso o usuário seja válido gerar e retornar o token jwt junto com os demais dados do usuário
+### Gerar o token
+
+Criar o token no controller de login
+Caso o usuário seja válido gerar e montar e retornar o token jwt junto com os demais dados do usuário
 
 ```javascript
 res.status(200).json({
@@ -164,4 +167,98 @@ res.status(200).json({
     },
     token: jwt.sign({id: userExiste._id}, configAuth.secret, {expiresIn:configAuth.expiresIn} )
 })
+```
+
+**Também é possível montar o token com outros dados do usuário se quiser.**
+```javascript
+const jwt = require('jsonwebtoken');
+
+// Chave secreta do servidor
+const secretKey = 'minha_chave_secreta';
+
+// Dados do usuário
+const user = {
+  id: 123,
+  name: 'Fulano',
+  email: 'fulano@example.com',
+};
+
+// Configurações do token
+const tokenConfig = {
+  expiresIn: '1h',
+};
+
+// Cria o payload
+const payload = {
+  sub: user.id,
+  name: user.name,
+  email: user.email,
+};
+
+// Cria o token
+const token = jwt.sign(payload, secretKey, tokenConfig);
+
+console.log(token); // exibe o token gerado
+```
+
+
+
+### validar o token
+
+* Receber o token enviando pelo front-end através do cabeçalho da requisição na chave **authorization**
+```javascript    
+const authHeader = req.headers.authorization
+```
+
+* Separar o token da palavra Bearer
+```javascript
+//const [bearer, token] = authHeader.split(' ')
+const [, token] = authHeader.split(' ')
+```
+
+* Decodificar usando promisify do pacote util, em um bloco try catch
+    * se conseguir decodificar retorne o next()
+    * se não conseguir retorne 401 não autorizado
+
+```javascript
+import { promisify } from 'util'
+
+const decoded = await promisify(jwt.verify)(token, configAuth.secret)
+```
+
+
+**Exemplo completo**
+
+```javascript
+import jwt from 'jsonwebtoken'
+import { promisify } from 'util'
+import configAuth from '../../config/auth'
+
+export default async(req, res, next) =>{
+
+    const authHeader = req.headers.authorization
+    if(!authHeader){
+        return res.status(401).json({
+            error: true,
+            code: 130,
+            message: 'Não autorizado!'
+        })
+    }
+
+    //const [bearer, token] = authHeader.split(' ')
+    const [, token] = authHeader.split(' ')
+
+    try {
+        const decoded = await promisify(jwt.verify)(token, configAuth.secret)
+        //criar uma nova chave na requisição
+        req.userId = decoded.id
+        return next()
+    } catch (error) {
+        return res.status(401).json({
+            error: true,
+            code: 131,
+            message: 'Token inválido!'
+        })
+    }
+}
 ```

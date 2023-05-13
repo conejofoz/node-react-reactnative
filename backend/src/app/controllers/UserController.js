@@ -2,6 +2,7 @@ import * as Yup from 'Yup'
 import bcrypt from 'bcryptjs'
 import User from '../models/User'
 
+
 class UserController {
     async store(req, res) {
 
@@ -86,6 +87,7 @@ class UserController {
             if(!userExiste){
                 return res.status(404).json({
                     error: true,
+                    code: '115',
                     message: 'Usuário não existe!'
                 })
             } 
