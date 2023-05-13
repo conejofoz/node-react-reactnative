@@ -108,3 +108,15 @@ if(! (await shema.isValid(req.body))){
     })
 }
 ```        
+
+
+
+
+
+### Criptografar a senha
+npm install --save bcryptjs
+
+```javascript
+let dados = req.body
+dados.senha = await bcrypt.hash(dados.senha, 7)
+```

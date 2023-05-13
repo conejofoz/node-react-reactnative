@@ -1,4 +1,5 @@
 import * as Yup from 'Yup'
+import bcrypt from 'bcryptjs'
 import User from '../models/User'
 
 class UserController {
@@ -58,7 +59,9 @@ class UserController {
             })
         }
 
-        const user = await User.create(req.body)
+        let dados = req.body
+        dados.senha = await bcrypt.hash(dados.senha, 7)
+        const user = await User.create(dados)
             .then((resposta) => {
                 return res.status(200).json({
                     error: false,
