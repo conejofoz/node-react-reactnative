@@ -124,10 +124,29 @@ dados.senha = await bcrypt.hash(dados.senha, 7)
 
 
 ### Login de usuário
-Verificar se o usuário existe
-Comparar se a senha informada é igual a senha do usuário encontrado
-Usar bcrypt.compare(senhainformada, user.senhacriptrografada)
-Se a senha não confere usar mensagem genérica para dificultar a vida de possíveis invasores.
+* Login básico
+    * Verificar se o usuário existe
+    * Comparar se a senha informada pelo front-end é igual a senha do usuário encontrado no banco de dados
+        * Usar bcrypt.compare(senhainformada, user.senhacriptrografada)
+    * Se a senha não confere usar mensagem genérica para dificultar a vida de possíveis invasores.
+
+
+
+### Apagar um registro no MongoDB
+Existe a possibilidade de travar o servidor caso o id enviado não seja um objeto válido do MongoDB,
+Diante disso é interessante fazer uma validação.
+Só que para isso vai ter que importar o mongoose no controller, uma outra alternativa é colocar em um
+bloco try catch e deixar que o catch capture o erro.
+
+```javascript
+if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({ 
+        error: true, 
+        code: '115',
+        message: 'Usuário não encontrado'})
+} 
+```
+
 
 
 

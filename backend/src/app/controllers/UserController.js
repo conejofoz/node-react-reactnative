@@ -1,21 +1,22 @@
 import * as Yup from 'Yup'
 import bcrypt from 'bcryptjs'
 import User from '../models/User'
+//const mongoose = require('mongoose')
 
 class UserController {
     async store(req, res) {
 
         if (typeof req.body === 'undefined') {
-            return res.status(400).json({ 
+            return res.status(400).json({
                 error: true,
                 code: 102,
                 message: 'Os dados do formulário não chegaram no controller'
-             })
+            })
         }
 
-        const emailExiste = await User.findOne({ email: req.body.email})
-        if(emailExiste) {
-            return res.status(400).json({ 
+        const emailExiste = (await User.findOne({ email: req.body.email }))
+        if (emailExiste) {
+            return res.status(400).json({
                 error: true,
                 code: 102,
                 message: 'Error: Este email já está cadastrado'
@@ -51,8 +52,8 @@ class UserController {
             email: Yup.string().required(),
             senha: Yup.string().required().min(6)
         })
-        if(! (await shema.isValid(req.body))){
-            return res.status(400).json({ 
+        if (!(await shema.isValid(req.body))) {
+            return res.status(400).json({
                 error: true,
                 code: 105,
                 message: 'Error: Dados inválidos!'
@@ -61,7 +62,7 @@ class UserController {
 
         let dados = req.body
         dados.senha = await bcrypt.hash(dados.senha, 7)
-        
+
         const user = await User.create(dados)
             .then((resposta) => {
                 return res.status(200).json({
@@ -71,13 +72,48 @@ class UserController {
                 })
             })
             .catch(err => {
-                return res.status(400).json({ 
+                return res.status(400).json({
                     error: true,
                     code: 101,
                     message: err.message
-                 })
+                })
             })
         //return res.json(user)
+    }
+
+    async delete(req, res) {
+        /* 
+        Verifica se o ID é um ObjectId válido ou deixair cair no catch
+        Não vou usar porque senão tem que importar o mongoose só para isso
+        */ 
+        /* if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(404).json({ 
+                error: true, 
+                code: '115',
+                message: 'Usuário não encontrado'})
+        } */
+
+        try {
+            const userExiste = await User.findOne({ _id: req.params.id })
+            if(!userExiste){
+                return res.status(404).json({
+                    error: true,
+                    message: 'Usuário não existe!'
+                })
+            } 
+
+            const user = await User.deleteOne({_id: req.params.id})
+            return res.json({
+                error: false,
+                message: 'Usuário apagado com sucesso!'
+            })
+
+        } catch (error) {
+            return res.status(500).json({
+                error: true,
+                message: error.message
+            })
+        }
     }
 }
 

@@ -12,6 +12,7 @@ routes.get('/', (req, res) => {
 
 routes.post('/users', UserController.store)
 routes.post('/login', LoginController.store)
+routes.delete('/users/:id', UserController.delete)
 
 /* usado anteriormente para teste */
 //routes.get('/', async (req, res)=>{
