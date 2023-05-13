@@ -4,7 +4,7 @@
 
 import express from 'express'
 import routes from './routes'
-import './database' //não precisa colocar from porque o nome do arquivo é index.js
+import './config/conexao' //não precisa colocar from porque o nome do arquivo é index.js
 import bodyParser from 'body-parser'
 
 class App{

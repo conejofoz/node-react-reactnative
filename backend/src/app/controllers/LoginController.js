@@ -1,5 +1,7 @@
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 import User from '../models/User'
+import configAuth from '../../config/auth'
 
 class LoginController{
 
@@ -24,7 +26,15 @@ class LoginController{
         }
 
 
-        res.status(200).json({ email: email, password: password})
+        res.status(200).json({
+            user:{
+                id: userExiste._id,
+                nome: userExiste.nome,
+                email: userExiste.email
+            },
+            token: jwt.sign({id: userExiste._id}, configAuth.secret, {expiresIn:configAuth.expiresIn} )
+
+        })
     }
 }
 

@@ -120,3 +120,29 @@ npm install --save bcryptjs
 let dados = req.body
 dados.senha = await bcrypt.hash(dados.senha, 7)
 ```
+
+
+
+### Login de usuário
+Verificar se o usuário existe
+Comparar se a senha informada é igual a senha do usuário encontrado
+Usar bcrypt.compare(senhainformada, user.senhacriptrografada)
+Se a senha não confere usar mensagem genérica para dificultar a vida de possíveis invasores.
+
+
+
+###JWT
+npm install --save jsonwebtoken
+
+Caso o usuário seja válido gerar e retornar o token jwt junto com os demais dados do usuário
+
+```javascript
+res.status(200).json({
+    user:{
+        id: userExiste._id,
+        nome: userExiste.nome,
+        email: userExiste.email
+    },
+    token: jwt.sign({id: userExiste._id}, configAuth.secret, {expiresIn:configAuth.expiresIn} )
+})
+```
