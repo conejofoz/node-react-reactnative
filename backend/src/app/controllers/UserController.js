@@ -4,6 +4,24 @@ import User from '../models/User'
 
 
 class UserController {
+
+    async index(req, res){
+        await User.find().select('-senha')
+            .then(users =>{
+                return res.json({
+                    error: false,
+                    users: users
+                })
+            })
+            .catch(err =>{
+                res.status(404).json({
+                    error: true,
+                    code: '120',
+                    message: err.message
+                })
+            })
+    }
+
     async store(req, res) {
 
         if (typeof req.body === 'undefined') {
