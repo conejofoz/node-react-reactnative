@@ -1,7 +1,6 @@
 import * as Yup from 'Yup'
 import bcrypt from 'bcryptjs'
 import User from '../models/User'
-//const mongoose = require('mongoose')
 
 class UserController {
     async store(req, res) {
@@ -82,17 +81,6 @@ class UserController {
     }
 
     async delete(req, res) {
-        /* 
-        Verifica se o ID é um ObjectId válido ou deixair cair no catch
-        Não vou usar porque senão tem que importar o mongoose só para isso
-        */ 
-        /* if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-            return res.status(404).json({ 
-                error: true, 
-                code: '115',
-                message: 'Usuário não encontrado'})
-        } */
-
         try {
             const userExiste = await User.findOne({ _id: req.params.id })
             if(!userExiste){
