@@ -262,3 +262,34 @@ export default async(req, res, next) =>{
     }
 }
 ```
+
+
+
+
+## Paginação de resultados
+
+* Instalar o módulo de paginação com mongoose
+```javascript
+npm install --save mongoose-paginate-v2
+```
+
+* importar no model
+```javascript
+import mongoosePaginate from "mongoose-paginate-v2"
+```
+
+* Usar o plugin no objeto Shema criado, nesse caso o User
+```javascript
+User.plugin(mongoosePaginate)
+```
+
+* No controller modificar a consulta
+```javascript
+const { page = 1} = req.query
+const { limit = 40} = req.query
+await User.paginate({}, {select: '_id nome email', page, limit})
+```
+Agora o front-end tem que mandar page e limit na url
+```html
+https://meusistema.com/users?page=6&limit=4
+```

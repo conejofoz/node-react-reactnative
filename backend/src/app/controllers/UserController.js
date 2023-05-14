@@ -6,7 +6,12 @@ import User from '../models/User'
 class UserController {
 
     async index(req, res){
-        await User.find().select('-senha')
+        const { page = 1} = req.query
+        const { limit = 40} = req.query
+
+        //await User.find().select('-senha')
+        //await User.paginate({}, {select: '-senha', page:page, limit: limit})
+        await User.paginate({}, {select: '_id nome email', page, limit})
             .then(users =>{
                 return res.json({
                     error: false,
