@@ -81,6 +81,42 @@ await User.create({
 ```
 
 
+Ex: Básicos com node
+
+Trazer todos os registros não especifique nenhum campo
+Trazer alguns, coloque o nome dos campos entre aspas e separados por espaço logo após o argumento de busca
+Não trazer um campo, coloque o nome do campo com o sinal de menos.
+Observe na sequência:
+
+```javascript
+User.findOne({_id: req.params.id})
+User.findOne({_id: req.params.id}, '_id name email createdAt updatedAt')
+User.findOne({_id: req.params.id}, '-password')
+```
+
+
+
+### Apagar um registro no MongoDB
+Existe a possibilidade de travar o servidor caso o id enviado não seja um objeto válido do MongoDB,
+Diante disso é interessante fazer uma validação.
+Só que para isso vai ter que importar o mongoose no controller. 
+Uma outra alternativa é colocar em um bloco try catch e deixar que o catch capture o erro.
+Obs: Essa abordagem não vale somente para apagar, mas sempre que precisar usar o id, como o visualizar.
+
+**remove()** Está obsoleto. Usar agora **deleteOne()**
+
+```javascript
+if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).json({ 
+        error: true, 
+        code: '115',
+        message: 'Usuário não encontrado'})
+} 
+```
+
+
+
+
 
 ### Controllers
 Basicamente retirar a função que está em cada rota e passar para um arquivo de controlador.
@@ -132,20 +168,7 @@ dados.senha = await bcrypt.hash(dados.senha, 7)
 
 
 
-### Apagar um registro no MongoDB
-Existe a possibilidade de travar o servidor caso o id enviado não seja um objeto válido do MongoDB,
-Diante disso é interessante fazer uma validação.
-Só que para isso vai ter que importar o mongoose no controller, uma outra alternativa é colocar em um
-bloco try catch e deixar que o catch capture o erro.
 
-```javascript
-if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return res.status(404).json({ 
-        error: true, 
-        code: '115',
-        message: 'Usuário não encontrado'})
-} 
-```
 
 
 

@@ -104,6 +104,26 @@ class UserController {
         //return res.json(user)
     }
 
+    async show(req, res) {
+        
+        User
+        .findOne({_id: req.params.id}, '_id nome email createdAt updatedAt')
+        .then((umUsuario)=>{
+            return res.json({
+                error: false,
+                user: umUsuario
+            })
+        })
+        .catch(err => {
+            return res.status(400).json({
+                error: true,
+                code: 102,
+                message: err.message
+            })
+        })
+
+    }
+
     async delete(req, res) {
         try {
             const userExiste = await User.findOne({ _id: req.params.id })
