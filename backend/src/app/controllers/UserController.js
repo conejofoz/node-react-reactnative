@@ -124,6 +124,77 @@ class UserController {
 
     }
 
+    async update(req, res){
+        /* 
+        id vem no body
+        extrair os campos do body através de destruturação
+        validar com yup
+        persquisar se o id existe no banco
+        validar se encontrou
+        verificar se o email foi alterado, se é diferente do antigo
+            se for diferente pesquisar se ja existe no banco, porque não pode pegar o email de outra pessoa
+        verificar se a senha veio, se sim criptografar a nova senha
+        aplicar o update retornando o usuário alterado
+         */
+
+        const { email, senha } = req.body
+
+        const shema = Yup.object().shape({
+            id: Yup.string().required(),
+            nome: Yup.string().required(),
+            email: Yup.string().required(),
+            senha: Yup.string().required().min(6)
+        })
+        if (!(await shema.isValid(req.body))) {
+            return res.status(400).json({
+                error: true,
+                code: 125,
+                message: 'Error: Dados inválidos!'
+            })
+        }
+
+        const userExiste = await User.findOne({_id: req.body.id})
+        if (!userExiste) {
+            return res.status(404).json({
+                error: true,
+                code: 126,
+                message: `Error: Usuário não encontrado!`
+            })
+        }
+        
+        if(email !== userExiste.email) {
+            const emailExiste = await User.findOne({email})
+            if(emailExiste) {
+                return res.status(400).json({
+                    error: true,
+                    code: 127,
+                    message: `Esse email já está cadastrado com outro usuário`
+                })
+            }
+        }
+
+        let dadosFormulario = req.body
+
+        if(dadosFormulario.senha){
+            dadosFormulario.senha = await bcrypt.hash(dadosFormulario.senha, 8)
+        }
+
+        await User.updateOne({_id: dadosFormulario.id}, dadosFormulario)
+        .then(()=>{
+            return res.json({
+                error: false,
+                message: `Usuário alterado com sucesso!`
+            })
+        }).catch(err=>{
+            return res.status(500).json({
+                error: true,
+                code: 128,
+                message: err.message
+            })
+        })
+        
+    }
+
     async delete(req, res) {
         try {
             const userExiste = await User.findOne({ _id: req.params.id })

@@ -14,6 +14,7 @@ routes.get('/', (req, res) => {
 routes.get('/users', UserController.index)
 routes.post('/users', UserController.store)
 routes.get('/users/:id', UserController.show)
+routes.put('/users', UserController.update)
 routes.post('/login', LoginController.store)
 routes.delete('/users/:id', authMiddleware, UserController.delete)
 

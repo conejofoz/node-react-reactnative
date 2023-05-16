@@ -115,6 +115,25 @@ if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
 ```
 
 
+### Atualizar um registro no MongoDB
+
+Dicas básicas
+* De preferência mandar o id no corpo da requisição/body
+* Extrair os campos do body através de destruturação
+* Validar os campos usando uma biblioteca. Ex: Yup
+* persquisar se o id existe no banco
+* validar se encontrou
+* verificar se o email foi alterado, se é diferente do antigo
+    * se for diferente pesquisar se ja existe no banco, porque não pode pegar o email de outra pessoa.
+* Verificar se a senha foi enviada pelo front-end.
+    * se sim, criptografar a senha
+* Aplicar o update.
+
+Para ver um exemplo completo veja o UserController no método update.
+
+
+
+
 
 
 
