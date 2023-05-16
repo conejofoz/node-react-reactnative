@@ -3,6 +3,7 @@ import { Router } from 'express'
 import User from './app/models/User'
 import UserController from './app/controllers/UserController'
 import LoginController from './app/controllers/LoginController'
+import PerfilController from './app/controllers/PerfilController'
 import authMiddleware from './app/middlewares/auth'
 
 const routes = new Router()
@@ -16,6 +17,8 @@ routes.post('/users', UserController.store)
 routes.get('/users/:id', UserController.show)
 routes.put('/users', UserController.update)
 routes.post('/login', LoginController.store)
+
+routes.get('/perfil', authMiddleware, PerfilController.show)
 routes.delete('/users/:id', authMiddleware, UserController.delete)
 
 /* usado anteriormente para teste */
