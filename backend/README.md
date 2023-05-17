@@ -350,3 +350,58 @@ Agora o front-end tem que mandar page e limit na url
 ```html
 https://meusistema.com/users?page=6&limit=4
 ```
+
+
+
+
+## Upload da foto de perfil
+
+Instalar a dependência Multer.
+npm install --save multer
+
+Multer é um middleware node.js para manipulação multipart/form-data, usado para o upload de arquivos.
+**Sempre olhar a documentação para ver como funciona uma biblioteca**
+
+* Criar um novo arquivo na pasta middlewares, assim se precisar é só importar o arquivo.
+* Importar o multer
+* Importar o crypto para gerar o nome do arquivo sempre diferente
+* Importar extname do path para extrair a extensão do arquivo original
+* Exportar o arquivo como default para importar onde precisar depois.
+* A implementação melhor pegar da documentação porque pode ser que mude.
+* Criar as pastas manualmente, o multer não cria. Ou crie uma rotina para criar a pasta caso não exista.
+* Importar o multer no arquivo de rotas
+* Importar o arquivo implementado no arquivo de rotas também, pode importar com o nome que quiser pois foi exportado como default.
+* No arquivo de rotas chamar a função multer logo abaixo de instanciar as rotas.
+    * O normal seria implementar o storage e chamar assim: var upload = multer({ storage: storage})
+    * Como foi implementado em arquivo separado fica assim: const uploadImgUser = multer(multerUpImgUser)
+        * Passando para a função multer o arquivo importado pois nele tem o storage.
+* Criar a controller que vai ser chamada na rota
+* Criar a rota que vai chamar o controller de upload
+    * Chamar a constante que foi atribuida ao multer, antes do controller na rota
+        * uploadImgUser.single('file') - para um arquivo - file é o nome do input no formulário.
+        * uploadImgUser.array - para multiplos arquivos.
+
+
+Resumo no routes.js
+
+```javascript
+import multer from 'multer'
+import multerUpImgUsers from './app/middlewares/uploadImgUser'
+const uploadImgUser = multer(multerUpImgUsers)
+routes.put('/perfil-img', authMiddleware, uploadImgUser.single('file'), PerfilImagemController.update)
+```
+
+No controller só tem o método update
+
+```javascript
+class PerfilImagemController{
+    async update(req, res){
+        return res.json({
+            error: false,
+            message: "Upload img user"
+        })
+    }
+}
+
+export default new PerfilImagemController()
+```
