@@ -1,6 +1,7 @@
 import * as Yup from 'Yup'
 import bcrypt from 'bcryptjs'
 import User from '../models/User'
+import config from '../../config/config'
 
 /* 
     Para editar o perfil o usuário precisa do id que está no token
@@ -14,11 +15,13 @@ import User from '../models/User'
 class PerfilController{
     async show (req, res){
         //usando o id que foi inserido na requisição la no middleware de autorização
-        await User.findOne({_id:req.userId}, '_id nome email createdAt updatedAt')
+        await User.findOne({_id:req.userId}, '_id nome email createdAt updatedAt fileName')
         .then((user)=>{
+            let url = config.url + '/files/users/' + user.fileName
             res.json({
                 error: false,
-                user: user
+                user: user,
+                url: url
             })
         }).catch((error)=>{
             res.status(400).json({

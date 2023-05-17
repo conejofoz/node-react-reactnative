@@ -462,3 +462,21 @@ if(!req.file){
     })
 }
 ```
+
+
+### Permitir acesso publico a imagem e escondendo o real caminho dela
+Note que foi criado uma rota /files
+Mais o caminho real das imagens é tmp/uploads
+```javascript
+this.app.use(
+    '/files',
+    express.static(path.resolve(__dirname, '..','tmp', 'uploads'))
+)
+```
+E no controller quando consultar um usuário já montar uma chave concatenando a url do servidor da api com o nome do arquivo e retornar essa chave para o front poder usar.
+```javascript
+await User.findOne({_id:req.userId}, '_id nome email createdAt updatedAt fileName')
+    .then((user)=>{
+        let url = config.url + '/files/users/' + user.fileName
+```
+**Pronto agora a imagem pode ser acessada pela url.**
