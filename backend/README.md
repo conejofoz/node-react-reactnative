@@ -421,3 +421,15 @@ const dadosImagem = {
 await User.updateOne({_id: req.userId}, dadosImagem)
 ```
 **Exemplo completo no controller PerfilImagemController**
+
+### Apagar a imagem antiga
+
+* No momento da consulta no banco pegar o nome da imagem que está na coluna fileName.
+* Inserir uma nova chave na requisição.
+* Pegar o caminho onde estão as imagens.
+    * req.file.destination
+* Concatenar o caminho com o nome do arquivo pego no banco
+* Testar se existe
+    * fs.access(imgAntiga, err => {)
+* apagar o arquivo
+    * unlink(imgAntiga, err => {)
