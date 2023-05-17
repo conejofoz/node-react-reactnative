@@ -3,10 +3,11 @@ import User from '../models/User'
 
 class PerfilImagemController{
     async update(req, res){
+
         if(!req.file){
             return res.status(404).json({
                 error: true,
-                message: 'Imagem não enviada'
+                message: 'Selecione uma imagem válida JPEG ou PNG'
             })
         }
         const dadosImagem = {

@@ -433,3 +433,32 @@ await User.updateOne({_id: req.userId}, dadosImagem)
     * fs.access(imgAntiga, err => {)
 * apagar o arquivo
     * unlink(imgAntiga, err => {)
+
+
+
+### Validando o upload da imagem
+
+No middleware de upload acrescentar uma nova propriedade no multer logo abaixo do storage.
+Vai ser uma função que vai retornar true ou false.
+No controller testar se req.file é true ou false
+
+```javascript
+//no middleware
+fileFilter: (req, file, cb) => {
+    if(file.mimetype == "image/jpeg" 
+        || file.mimetype == "image/jpg" 
+        || file.mimetype == "image/png"){
+            return cb(null, true)
+        } else {
+            return cb(null, false)
+    }
+}
+
+//no controller
+if(!req.file){
+    return res.status(404).json({
+        error: true,
+        message: 'Selecione uma imagem válida JPEG ou PNG'
+    })
+}
+```
