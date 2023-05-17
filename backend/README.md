@@ -405,3 +405,19 @@ class PerfilImagemController{
 
 export default new PerfilImagemController()
 ```
+
+### Salvar o nome da imagem no banco de dados
+
+Criar duas novas posições na model, originalName e fileName.
+Receber elas na requisição no controller
+Atualizar o usuário logado, ou seja com aquele id que foi inserido na req.
+
+```javascript	
+const dadosImagem = {
+    originalName: req.file.originalname,
+    fileName: req.file.filename
+}
+
+await User.updateOne({_id: req.userId}, dadosImagem)
+```
+**Exemplo completo no controller PerfilImagemController**

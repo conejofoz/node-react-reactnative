@@ -107,7 +107,7 @@ class UserController {
     async show(req, res) {
         
         User
-        .findOne({_id: req.params.id}, '_id nome email createdAt updatedAt')
+        .findOne({_id: req.params.id}, '_id nome email createdAt updatedAt originalName fileName')
         .then((umUsuario)=>{
             return res.json({
                 error: false,

@@ -13,6 +13,12 @@ const User = new mongoose.Schema({
     senha:{
         type: String,
         required: true
+    },
+    fileName: {
+        type: String
+    },
+    originalName: {
+        type: String
     }
 },{
     timestamps: true,
