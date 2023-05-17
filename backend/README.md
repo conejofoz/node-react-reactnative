@@ -306,6 +306,21 @@ export default async(req, res, next) =>{
 ```
 
 
+## Perfil de Usuário
+
+Algumas dicas para editar o perfil de usuário
+
+ 
+* Para editar o perfil o usuário precisa do id que está no token
+* Para ter o id usuário precisa do token
+* Para ter o token o usuário precisa estar logado, pois é no processo de login que o token é criado e nele tem o id
+* Não adianta o usuário mandar o id pelo body ou pela url, vai ser usado esse que está na requisição
+* Esse id é extraído do token no processo de autorização, ou seja no middleware auth.
+* Por isso chamar o middleware auth na rota antes de manipular o perfil
+
+Obs: Essas recomenações são para este projeto, pois existem muitas outras maneiras de fazer. No Django Rest Framework por exemplo por padrão não é permitido modificar uma requisição.
+
+
 
 
 ## Paginação de resultados

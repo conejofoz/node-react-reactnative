@@ -19,6 +19,7 @@ routes.put('/users', UserController.update)
 routes.post('/login', LoginController.store)
 
 routes.get('/perfil', authMiddleware, PerfilController.show)
+routes.put('/perfil', authMiddleware, PerfilController.update)
 routes.delete('/users/:id', authMiddleware, UserController.delete)
 
 /* usado anteriormente para teste */

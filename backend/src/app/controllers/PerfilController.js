@@ -28,6 +28,66 @@ class PerfilController{
 
         })
     }
+
+    async update(req, res){
+
+        const { email } = req.body
+
+        const shema = Yup.object().shape({
+            nome: Yup.string().required(),
+            email: Yup.string().required(),
+            senha: Yup.string().required().min(6)
+        })
+        if (!(await shema.isValid(req.body))) {
+            return res.status(400).json({
+                error: true,
+                code: 125,
+                message: 'Error: Dados inválidos!'
+            })
+        }
+
+        //const userExiste = await User.findOne({_id: req.body.id})
+        const userExiste = await User.findOne({_id: req.userId})
+        if (!userExiste) {
+            return res.status(404).json({
+                error: true,
+                code: 126,
+                message: `Error: Usuário não encontrado!`
+            })
+        }
+        
+        if(email !== userExiste.email) {
+            const emailExiste = await User.findOne({email})
+            if(emailExiste) {
+                return res.status(400).json({
+                    error: true,
+                    code: 127,
+                    message: `Esse email já está cadastrado com outro usuário`
+                })
+            }
+        }
+
+        let dadosFormulario = req.body
+
+        if(dadosFormulario.senha){
+            dadosFormulario.senha = await bcrypt.hash(dadosFormulario.senha, 8)
+        }
+
+        await User.updateOne({_id: req.userId}, dadosFormulario)
+        .then(()=>{
+            return res.json({
+                error: false,
+                message: `Usuário alterado com sucesso!`
+            })
+        }).catch(err=>{
+            return res.status(500).json({
+                error: true,
+                code: 128,
+                message: err.message
+            })
+        })
+        
+    }
 }
 
 export default new PerfilController()
