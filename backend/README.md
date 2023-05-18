@@ -480,3 +480,17 @@ await User.findOne({_id:req.userId}, '_id nome email createdAt updatedAt fileNam
         let url = config.url + '/files/users/' + user.fileName
 ```
 **Pronto agora a imagem pode ser acessada pela url.**
+
+
+## Liberar permissões da API com cors no NodeJS
+npm install --save cors
+
+```javascript
+this.app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE")
+    res.header("Access-Control-Allow-Headers", "X-PINGOTHER", "Content-Type")
+    this.app.use(cors())
+    next()
+})
+```        
