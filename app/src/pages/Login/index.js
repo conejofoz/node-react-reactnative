@@ -1,28 +1,18 @@
 import React from "react";
-
-import Routes from './routes'
-
-export default function App(){
-    return <Routes />
-}
+import { Text, View, StyleSheet } from 'react-native'
 
 
-
-
-/* import { Text, View, StyleSheet } from 'react-native'
-
-
-const App = () =>{
+export default function Login(){
     return (
         <View style={styles.principal}>
-            <Text>Usuários</Text>
+            <Text>Página de Login</Text>
         </View>
     )
 
     
 }
 
-export default App
+
 
 const styles = StyleSheet.create({
     principal: {
@@ -30,4 +20,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     }
-}) */
+})
