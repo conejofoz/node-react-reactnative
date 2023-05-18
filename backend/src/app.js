@@ -7,6 +7,7 @@ import routes from './routes'
 import './config/conexao' //não precisa colocar from porque o nome do arquivo é index.js
 import bodyParser from 'body-parser'
 import path from 'path'
+import cors from 'cors'
 
 class App{
     constructor(){
@@ -22,6 +23,15 @@ class App{
             '/files',
             express.static(path.resolve(__dirname, '..','tmp', 'uploads'))
         )
+
+        this.app.use((req, res, next) => {
+            res.header("Access-Control-Allow-Origin", "*")
+            res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE")
+            res.header("Access-Control-Allow-Headers", "X-PINGOTHER", "Content-Type")
+            this.app.use(cors())
+            next()
+        })
+
     }
     routes(){
         this.app.use(routes)

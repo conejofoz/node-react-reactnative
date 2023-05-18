@@ -44,7 +44,7 @@ backend/node_modules/
 site/node_modules/
 aplicativo/node_modules/
 jspm_packages/
-tmp/uploads/users/
+backend/tmp/uploads/
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
