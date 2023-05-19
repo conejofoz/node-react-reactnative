@@ -11,7 +11,7 @@ function routes(){
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name='Login' component={Login} />
+                <Stack.Screen name='Login' component={Login} options={{headerShow: false}} />
                 <Stack.Screen name='NewUser' component={NewUser} />
             </Stack.Navigator>
         </NavigationContainer>
