@@ -1,17 +1,23 @@
-import React from "react";
+import React, {useState} from "react";
 import { Text, Image, TextInput, View, StyleSheet, Button, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
 
 export default function Login(){
+
+    const [email, setEmail] = useState('')
+    const [senha, setSenha] = useState('')
+
     const navigation = useNavigation()
     
     const NewUser = () =>{
         navigation.navigate('NewUser')
     }
 
-    const acessar = ()=>{
-        alert('Login')
+    const hadleLogin = ()=>{
+        alert(email)
+        console.log(email)
+        //console.log("Senha: ",senha)
     }
     return (
         <View style={styles.container}>
@@ -25,16 +31,19 @@ export default function Login(){
                 style={styles.inputForm}
                 placeholder="Usuário..."
                 autoCorrect={false}
-                onChange={()=>{}}
+                value={email}
+                onChange={ txt => setEmail(txt) }
              />
             <TextInput
                 style={styles.inputForm}
                 placeholder="Senha..."
                 autoCorrect={false}
-                onChange={()=>{}}
+                value={senha}
+                secureTextEntry={true}
+                onChange={txt => setSenha(txt)}
              />
 
-             <TouchableOpacity style={styles.btnSubmitForm} onPress={acessar}>
+             <TouchableOpacity style={styles.btnSubmitForm} onPress={hadleLogin}>
                 <Text style={styles.txtSubmitForm}>Acessar</Text>
              </TouchableOpacity>
 
