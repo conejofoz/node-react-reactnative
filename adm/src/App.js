@@ -1,12 +1,8 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import RoutesB from "./routes";
 
 function App() {
-  return (
-    <div className="App">
-      <h1>Usuários</h1>
-    </div>
-  );
+  return <RoutesB />;
 }
 
 export default App;
