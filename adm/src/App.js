@@ -1,5 +1,5 @@
 import React from "react";
-import RoutesB from "./routes";
+import RoutesB from "./routes/routes";
 
 function App() {
   return <RoutesB />;
