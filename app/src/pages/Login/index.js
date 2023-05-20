@@ -32,7 +32,7 @@ export default function Login(){
                 placeholder="Usuário..."
                 autoCorrect={false}
                 value={email}
-                onChange={ txt => setEmail(txt) }
+                onChangeText={ (event) =>{ setEmail(event)} }
              />
             <TextInput
                 style={styles.inputForm}
@@ -40,7 +40,7 @@ export default function Login(){
                 autoCorrect={false}
                 value={senha}
                 secureTextEntry={true}
-                onChange={txt => setSenha(txt)}
+                onChangeText={txt => setSenha(txt)}
              />
 
              <TouchableOpacity style={styles.btnSubmitForm} onPress={hadleLogin}>
