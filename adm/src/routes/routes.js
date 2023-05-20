@@ -6,6 +6,7 @@ import { history } from '../history'
 import ProtectedRoute from "./ProtectedRoute";
 
 import Login from "../pages/Login";
+import RecuperarSenha from "../pages/RecuperarSenha";
 import Dashboard from "../pages/Dashboard";
 //import baseLogin from "../containers/login";
 import { PaiLogin } from "../containers/login/PaiLogin";
@@ -18,6 +19,7 @@ export default function RoutesB(){
                 {/* <Route path="/" element={baseLogin(<Login />)} /> */}
                 {/* <Route path="/" element={<baseLogin><Login /></baseLogin>} /> */}
                 <Route path="/" element={<PaiLogin><Login /></PaiLogin>}/>
+                <Route path="/recuperar-senha" element={<PaiLogin><RecuperarSenha/></PaiLogin>}/>
                 
                 <Route 
                     path="/dashboard" 
