@@ -1,6 +1,7 @@
-import React from "react";
+//import React from "react";
+import '../../styles/login/index.css'
 
-class BaseLogin extends React.Component {
+ /* class BaseLogin extends React.Component {
     render() {
         return(
             <>
@@ -8,7 +9,13 @@ class BaseLogin extends React.Component {
             </>
         )
     }
+} 
+
+
+export default BaseLogin
+ */
+
+const BaseLogin = ({children})=>{
+    return children
 }
-
-
 export default BaseLogin

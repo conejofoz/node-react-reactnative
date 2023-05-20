@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
-import '../../styles/login/index.css'
+//import '../../styles/login/index.css' //passou para o componente BaseLogin
 
 export default function Login(){
     return (

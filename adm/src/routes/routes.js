@@ -7,7 +7,8 @@ import ProtectedRoute from "./ProtectedRoute";
 
 import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
-import baseLogin from "../containers/login";
+//import baseLogin from "../containers/login";
+import { PaiLogin } from "../containers/login/PaiLogin";
 
 export default function RoutesB(){
     return (
@@ -15,13 +16,14 @@ export default function RoutesB(){
             <Routes>
                 {/* <Route path="/" element={<Login />} /> */}
                 {/* <Route path="/" element={baseLogin(<Login />)} /> */}
-                <Route path="/" element={<baseLogin><Login /></baseLogin>} />
+                {/* <Route path="/" element={<baseLogin><Login /></baseLogin>} /> */}
+                <Route path="/" element={<PaiLogin><Login /></PaiLogin>}/>
                 
                 <Route 
                     path="/dashboard" 
                     element={
                         <ProtectedRoute >
-                            <Dashboard/>
+                            <PaiLogin><Dashboard/></PaiLogin>
                         </ProtectedRoute>
                     }
                 />
