@@ -7,12 +7,16 @@ import ProtectedRoute from "./ProtectedRoute";
 
 import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
+import baseLogin from "../containers/login";
 
 export default function RoutesB(){
     return (
         <BrowserRouter history={history}>
             <Routes>
-                <Route path="/" element={<Login />} />
+                {/* <Route path="/" element={<Login />} /> */}
+                {/* <Route path="/" element={baseLogin(<Login />)} /> */}
+                <Route path="/" element={<baseLogin><Login /></baseLogin>} />
+                
                 <Route 
                     path="/dashboard" 
                     element={
