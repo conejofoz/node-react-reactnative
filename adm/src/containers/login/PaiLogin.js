@@ -7,5 +7,4 @@ export const PaiLogin = ({ children }) =>{
 
     return <BaseLogin>{children}</BaseLogin>
     
-    
 }

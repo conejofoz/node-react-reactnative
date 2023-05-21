@@ -8,8 +8,11 @@ import ProtectedRoute from "./ProtectedRoute";
 import Login from "../pages/Login";
 import RecuperarSenha from "../pages/RecuperarSenha";
 import Dashboard from "../pages/Dashboard";
+import Perfil from "../pages/Perfil";
 //import baseLogin from "../containers/login";
 import { PaiLogin } from "../containers/login/PaiLogin";
+import { PaiDashboard } from "../containers/dashboard";
+import { PaiPerfil } from "../containers/perfil";
 
 export default function RoutesB(){
     return (
@@ -21,14 +24,22 @@ export default function RoutesB(){
                 <Route path="/" element={<PaiLogin><Login /></PaiLogin>}/>
                 <Route path="/recuperar-senha" element={<PaiLogin><RecuperarSenha/></PaiLogin>}/>
                 
+                
                 <Route 
                     path="/dashboard" 
                     element={
                         <ProtectedRoute >
-                            <PaiLogin><Dashboard/></PaiLogin>
+                            <PaiDashboard><Dashboard/></PaiDashboard>
                         </ProtectedRoute>
                     }
                 />
+
+                <Route
+                    path="/perfil"
+                    element={<ProtectedRoute>
+                        <PaiPerfil><Perfil/></PaiPerfil>
+                    </ProtectedRoute>}
+                 />
                 {/* <PrivateRoute path="/dashboard" element={<Dashboard />} /> */}
             </Routes>
         </BrowserRouter>
