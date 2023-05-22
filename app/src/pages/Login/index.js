@@ -14,10 +14,23 @@ export default function Login(){
         navigation.navigate('NewUser')
     }
 
-    const hadleLogin = ()=>{
-        alert(email)
-        console.log(email)
-        //console.log("Senha: ",senha)
+    const hadleLogin = async()=>{
+        
+        const req = await fetch('http://192.168.1.195:8080/login',{
+            method: 'POST',
+            body: JSON.stringify({email, senha}),
+            headers: {'Content-Type': 'application/json'}
+        })
+
+        const result = await req.json()
+        console.log(result)
+
+        if(result.error){
+            Alert(result.message)
+        } else {
+            Alert("Usuário: " + result.user.email)
+        }
+
     }
     return (
         <View style={styles.container}>
