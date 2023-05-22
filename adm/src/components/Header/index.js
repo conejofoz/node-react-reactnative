@@ -9,7 +9,7 @@ const Header = ()=>(
         <Link className="navbar-brand" to="/dashboard">Dashboard</Link>
         <Nav navbar >
             <NavItem>
-                <img className='rounded-circle mt-2' src={iconeUsuario} width={20} height={20} />
+                <img className='rounded-circle mt-2' src={iconeUsuario} width={20} height={20} alt='Imagem do usuario' />
             </NavItem>
 
             <UncontrolledDropdown setActiveFromChild>
