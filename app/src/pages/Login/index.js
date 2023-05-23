@@ -63,7 +63,8 @@ export default function Login(){
         <View style={styles.container}>
             <View style={styles.logo}>
                 <Image
-                    source={require('../../../assets/logotipo.png')}
+                    style={styles.logo}
+                    source={require('../../../assets/mercado.png')}
                 />
             </View>
 
@@ -107,7 +108,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#161616'
     },
     logo: {
-        paddingBottom: 20
+        paddingBottom: 20,
+        marginBottom: 20,
+        height: 120,
+        width: 120
     },
     inputForm:{
         backgroundColor: '#fff',
