@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { Text, Image, TextInput, View, StyleSheet, Button, TouchableOpacity, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from '../../config/api'
 
@@ -24,6 +25,13 @@ export default function Login(){
         .then((response)=>{
             Alert.alert("Successo", response.data.user.nome)
             console.log(response.data)
+            try {
+                AsyncStorage.setItem('@token', response.data.token)
+              } catch (e) {
+                // saving error
+                console.log("Erro não salvou o token: " + e)
+              }
+              navigation.navigate('Home')
         }).catch((err)=>{
             Alert.alert("Atenção", err.response.data.message)
             console.log(err.response.data)

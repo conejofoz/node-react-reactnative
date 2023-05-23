@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     btnSubmitForm: {
-        backgroundColor: '#ebb105',
+        backgroundColor: '#ffe600',
         width: '90%',
         height: 45,
         alignItems: 'center',
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         borderRadius: 7
     },
     txtSubmitForm: {
-        color: '#fff',
+        color: '#2d3277',
         fontSize: 22
     },
     linkNewUser: {
