@@ -18,6 +18,8 @@ export default function Login(){
 
     const hadleLogin = async()=>{
 
+        if(!validate()) return false
+
         await api.post('/login', { email, senha})
         .then((response)=>{
             Alert.alert("Successo", response.data.user.nome)
@@ -42,6 +44,18 @@ export default function Login(){
             alert("Usuário: " + result.user.email)
         } */
 
+    }
+
+    const validate = ()=>{
+        if(!email){
+            Alert.alert("Preencha o campo E-mail")
+            return false
+        }
+        if(!senha){
+            Alert.alert("Preencha o campo senha")
+            return false
+        }
+        return true
     }
 
 
