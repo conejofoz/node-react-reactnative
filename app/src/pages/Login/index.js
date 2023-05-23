@@ -1,6 +1,8 @@
 import React, {useState} from "react";
-import { Text, Image, TextInput, View, StyleSheet, Button, TouchableOpacity } from 'react-native'
+import { Text, Image, TextInput, View, StyleSheet, Button, TouchableOpacity, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+
+import api from '../../config/api'
 
 
 export default function Login(){
@@ -15,23 +17,34 @@ export default function Login(){
     }
 
     const hadleLogin = async()=>{
-        
+
+        await api.post('/login', { email, senha})
+        .then((response)=>{
+            Alert.alert("Successo", response.data.user.nome)
+            console.log(response.data)
+        }).catch((err)=>{
+            Alert.alert("Atenção", err.response.data.message)
+            console.log(err.response.data)
+        });
+
+        /* 
         const req = await fetch('http://192.168.1.195:8080/login',{
             method: 'POST',
             body: JSON.stringify({email, senha}),
             headers: {'Content-Type': 'application/json'}
-        })
-
+        }).catch((error) => {console.log(error)})
+        console.log(req)
         const result = await req.json()
         console.log(result)
-
         if(result.error){
-            Alert(result.message)
+            alert(result.message)
         } else {
-            Alert("Usuário: " + result.user.email)
-        }
+            alert("Usuário: " + result.user.email)
+        } */
 
     }
+
+
     return (
         <View style={styles.container}>
             <View style={styles.logo}>
