@@ -1,41 +1,42 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Text, Image, TextInput, View, StyleSheet, Button, TouchableOpacity, Alert } from 'react-native'
+import { Container, Logo, BtnSubmitForm, InputForm, LinkNewUser, TxtSubmitForm } from './style.js'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from '../../config/api'
 
 
-export default function Login(){
+export default function Login() {
 
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
 
     const navigation = useNavigation()
-    
-    const NewUser = () =>{
+
+    const NewUser = () => {
         navigation.navigate('NewUser')
     }
 
-    const hadleLogin = async()=>{
+    const hadleLogin = async () => {
 
-        if(!validate()) return false
+        if (!validate()) return false
 
-        await api.post('/login', { email, senha})
-        .then((response)=>{
-            Alert.alert("Successo", response.data.user.nome)
-            console.log(response.data)
-            try {
-                AsyncStorage.setItem('@token', response.data.token)
-              } catch (e) {
-                // saving error
-                console.log("Erro não salvou o token: " + e)
-              }
-              navigation.navigate('Home')
-        }).catch((err)=>{
-            Alert.alert("Atenção", err.response.data.message)
-            console.log(err.response.data)
-        });
+        await api.post('/login', { email, senha })
+            .then((response) => {
+                Alert.alert("Successo", response.data.user.nome)
+                console.log(response.data)
+                try {
+                    AsyncStorage.setItem('@token', response.data.token)
+                } catch (e) {
+                    // saving error
+                    console.log("Erro não salvou o token: " + e)
+                }
+                navigation.navigate('Home')
+            }).catch((err) => {
+                Alert.alert("Atenção", err.response.data.message)
+                console.log(err.response.data)
+            });
 
         /* 
         const req = await fetch('http://192.168.1.195:8080/login',{
@@ -54,12 +55,12 @@ export default function Login(){
 
     }
 
-    const validate = ()=>{
-        if(!email){
+    const validate = () => {
+        if (!email) {
             Alert.alert("Preencha o campo E-mail")
             return false
         }
-        if(!senha){
+        if (!senha) {
             Alert.alert("Preencha o campo senha")
             return false
         }
@@ -68,46 +69,45 @@ export default function Login(){
 
 
     return (
-        <View style={styles.container}>
-            <View style={styles.logo}>
-                <Image
-                    style={styles.logo}
-                    source={require('../../../assets/mercado.png')}
+        <ScrollView>
+            <Container>
+                <Logo>
+                    <Image
+                        source={require('../../../assets/mercado.png')}
+                    />
+                </Logo>
+
+                <InputForm
+                    placeholder="Usuário..."
+                    autoCorrect={false}
+                    value={email}
+                    onChangeText={(event) => { setEmail(event) }}
                 />
-            </View>
+                <InputForm
+                    placeholder="Senha..."
+                    autoCorrect={false}
+                    value={senha}
+                    secureTextEntry={true}
+                    onChangeText={txt => setSenha(txt)}
+                />
 
-            <TextInput
-                style={styles.inputForm}
-                placeholder="Usuário..."
-                autoCorrect={false}
-                value={email}
-                onChangeText={ (event) =>{ setEmail(event)} }
-             />
-            <TextInput
-                style={styles.inputForm}
-                placeholder="Senha..."
-                autoCorrect={false}
-                value={senha}
-                secureTextEntry={true}
-                onChangeText={txt => setSenha(txt)}
-             />
+                <BtnSubmitForm onPress={hadleLogin}>
+                    <TxtSubmitForm>Acessar</TxtSubmitForm>
+                </BtnSubmitForm>
 
-             <TouchableOpacity style={styles.btnSubmitForm} onPress={hadleLogin}>
-                <Text style={styles.txtSubmitForm}>Acessar</Text>
-             </TouchableOpacity>
-
-            <Text 
-            style={styles.linkNewUser} 
-            onPress={NewUser}
-            >Cadastrar</Text>
-        </View>
+                <LinkNewUser
+                    onPress={NewUser}
+                >Cadastrar
+                </LinkNewUser>
+            </Container>
+        </ScrollView>
     )
 
-    
+
 }
 
 
-
+/* 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -147,4 +147,4 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginTop:15
     }
-})
+}) */
