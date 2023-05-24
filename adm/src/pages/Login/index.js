@@ -3,6 +3,9 @@ import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import { useNavigate} from 'react-router-dom'
 import '../../styles/login/index.css' //passou para o componente BaseLogin
 
+import { connect } from 'react-redux'
+import * as actions from '../../store/actions/index.js'
+
 //export default function Login(){
 class Login extends React.Component{    
     //const navigate = useNavigate();
@@ -26,7 +29,7 @@ class Login extends React.Component{
         console.log(email, senha)
 
         this.props.handleLogin({email, senha}, (err)=>{
-            
+
         })
     }
 
@@ -34,12 +37,11 @@ class Login extends React.Component{
         const { email, senha } = this.state
     return (
         <>
-        {console.log(email)}
         <div className='container-login'>
             <div className='login card shadow'>
                 <Form className='form-signin text-center'>
                     <img className='mb-4' src="images/logo_celke.png" alt='' width="72" height="72" />
-                    <h1 className="h3 mb-3 font-weight-normal">Área Restrita{email}{senha}</h1>
+                    <h1 className="h3 mb-3 font-weight-normal">Área Restrita</h1>
 
                     <FormGroup>
                         <Label for='email'>Usuário</Label>
@@ -64,4 +66,4 @@ class Login extends React.Component{
     }
 }
 
-export default Login
+export default connect(null, actions) (Login)

@@ -1,6 +1,8 @@
 import React from "react";
 //import { BrowserRouter, Switch, Route} from 'react-router-dom'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Provider } from "react-redux";
+import store from "../store/store.js";
 import { history } from '../history'
 //import PrivateRoute from './PrivateRoute'
 import ProtectedRoute from "./ProtectedRoute";
@@ -16,6 +18,7 @@ import { PaiPerfil } from "../containers/perfil";
 
 export default function RoutesB(){
     return (
+        <Provider store={store}>
         <BrowserRouter history={history}>
             <Routes>
                 {/* <Route path="/" element={<Login />} /> */}
@@ -43,6 +46,7 @@ export default function RoutesB(){
                 {/* <PrivateRoute path="/dashboard" element={<Dashboard />} /> */}
             </Routes>
         </BrowserRouter>
+        </Provider>
         
     )
 }
