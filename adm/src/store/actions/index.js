@@ -1,12 +1,13 @@
 import axios from 'axios'
 import { api } from '../../config/index.js'
+import { getToken, saveToke } from './localStorage.js';
 
 export const handleLogin = ({email, senha}, callback) =>{
     return function(dispatch){
-        console.log('chegou aqui', email, senha);
         axios.post(api + '/login', {email,senha})
         .then((response)=>{
-            console.log(response.data);
+            saveToke(response.data);
+            getToken()
         })
         .catch((error)=>{
             console.log(error.response.data);

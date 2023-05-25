@@ -26,10 +26,8 @@ class Login extends React.Component{
 
     handleLogin(){
         const {email, senha} = this.state
-        console.log(email, senha)
 
         this.props.handleLogin({email, senha}, (err)=>{
-
         })
     }
 
