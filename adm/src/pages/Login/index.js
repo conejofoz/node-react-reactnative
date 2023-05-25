@@ -17,7 +17,8 @@ class Login extends React.Component{
 
     state = {
         email: '',
-        senha: ''
+        senha: '',
+        erro: ''
     }
 
     onChangeInput = (field, ev)=>{
@@ -27,12 +28,22 @@ class Login extends React.Component{
     handleLogin(){
         const {email, senha} = this.state
 
+        if(!this.validate()) return
         this.props.handleLogin({email, senha}, (err)=>{
         })
     }
 
+    validate(){
+        const {email, senha} = this.state
+        if(!email) return this.setState( {erro: {message: "Preencha o email"}} )
+        if(!senha) return this.setState( {erro: {message: "Preencha a senha"}} )
+
+        this.setState({erro: ''})
+        return true
+    }
+
     render() {
-        const { email, senha } = this.state
+        const { email, senha, erro } = this.state
     return (
         <>
         <div className='container-login'>
@@ -41,6 +52,7 @@ class Login extends React.Component{
                     <img className='mb-4' src="images/logo_celke.png" alt='' width="72" height="72" />
                     <h1 className="h3 mb-3 font-weight-normal">Área Restrita</h1>
 
+                    {erro.message}
                     <FormGroup>
                         <Label for='email'>Usuário</Label>
                         <Input type='email' value={email} onChange={(ev)=> this.onChangeInput("email", ev)} name='email' id='email' placeholder='Email do usuário'/>
