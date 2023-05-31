@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { api } from '../../config/index.js'
 import { getToken, saveToke } from './localStorage.js';
+import errorHandling from './errorHandling.js';
 
 export const handleLogin = ({email, senha}, callback) =>{
     return function(dispatch){
@@ -9,8 +10,6 @@ export const handleLogin = ({email, senha}, callback) =>{
             saveToke(response.data);
             getToken()
         })
-        .catch((error)=>{
-            console.log(error.response.data);
-        })
+        .catch((error)=> callback(errorHandling(error)));
     }
 }

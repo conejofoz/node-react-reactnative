@@ -4,7 +4,9 @@ import { useNavigate} from 'react-router-dom'
 import '../../styles/login/index.css' //passou para o componente BaseLogin
 
 import { connect } from 'react-redux'
-import * as actions from '../../store/actions/index.js'
+import * as actions from '../../store/actions/index.js' //tem a action handleLogin que faz requisição
+
+import AlertDanger from '../../components/AlertDanger'
 
 //export default function Login(){
 class Login extends React.Component{    
@@ -30,6 +32,8 @@ class Login extends React.Component{
 
         if(!this.validate()) return
         this.props.handleLogin({email, senha}, (err)=>{
+            console.log(err)
+            this.setState({erro: {message: err.erro.message}})
         })
     }
 
@@ -52,7 +56,8 @@ class Login extends React.Component{
                     <img className='mb-4' src="images/logo_celke.png" alt='' width="72" height="72" />
                     <h1 className="h3 mb-3 font-weight-normal">Área Restrita</h1>
 
-                    {erro.message}
+                    <AlertDanger erros={erro} />
+                    
                     <FormGroup>
                         <Label for='email'>Usuário</Label>
                         <Input type='email' value={email} onChange={(ev)=> this.onChangeInput("email", ev)} name='email' id='email' placeholder='Email do usuário'/>
